@@ -1,0 +1,35 @@
+long long maxTip(int a[], int b[], int n, int x, int y) {
+       // code here
+       long long ans=0;
+       vector<pair<long long,long long> > vec(n);
+       for (int i=0;i<n;i++){
+           vec[i].first=a[i]-b[i];
+           vec[i].second=i;
+       }
+       sort(vec.begin(),vec.end());
+       reverse(vec.begin(),vec.end());
+       int lt=0,rt=0,l=0,r=n-1;
+       while(lt+rt<n && lt<x && rt<y){
+           if (vec[l].first>=abs(vec[r].first)){
+               ans+=a[vec[l].second];
+               lt++;
+               l++;
+           }
+           else{
+               ans+=b[vec[r].second];
+               r--;
+               rt++;
+           }
+       }
+       while(lt+rt<n && lt<x){
+           ans+=a[vec[l].second];
+           l++;
+           lt++;
+       }
+       while(lt+rt<n && rt<y){
+           ans+=b[vec[r].second];
+           r--;
+           rt++;
+       }
+       return ans;
+   }
